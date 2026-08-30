@@ -1,0 +1,14 @@
+echo "Generating Makefile..."
+echo "WARNING: its possible that the final binary will be corrupted!"
+cat << 'EOF' > Makefile
+bin:
+	gcc sb.c -o smallbasic
+
+install:
+	gcc sb.c -o /usr/bin/smallbasic
+
+
+
+clean:
+	rm -f smallbasic
+EOF
