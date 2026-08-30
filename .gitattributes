@@ -1,2 +1,2 @@
 *.sb linguist-language="Small Basic" linguist-detectable=true
-
+*.c linguist-vendored=true
