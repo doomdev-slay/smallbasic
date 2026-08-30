@@ -1,3 +1,3 @@
-*.sb linguist-language="Small Basic" linguist-detectable=true
+*.sb linguist-language="SmallBasic" linguist-detectable=true
 *.c linguist-vendored
 
