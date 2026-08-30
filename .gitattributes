@@ -1,3 +1,1 @@
-hello.sb linguist-language=BASIC linguist-detectable=true
-variables.sb inguist-language=BASIC linguist-detectable=true
-
+*.sb linguist-language=BASIC linguist-detectable=true
