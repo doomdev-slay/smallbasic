@@ -3,4 +3,5 @@
 
 smallbasic usage: 
 
-  ```  smallbasic <input files>
+  ```
+    smallbasic <input files>
