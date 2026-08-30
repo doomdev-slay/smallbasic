@@ -73,6 +73,11 @@ int main(int argc, char *argv[]) {
                 fprintf(output_asm, "    mov rdi, 0\n");
                 fprintf(output_asm, "    syscall\n\n");
 
+    
+            
+                    
+                
+
 
                 text_count++;
             }
@@ -82,6 +87,7 @@ int main(int argc, char *argv[]) {
             int value = atoi(line + 4);
             fprintf(output_asm, "    # --- variable a = %d ---\n", value);
             fprintf(output_asm, "    mov r8, %d\n", value); // variable 'a' lives in register R8
+            
         }
         else if (strncmp(line, "b = ", 4) == 0) {
             int value = atoi(line + 4);
@@ -94,15 +100,33 @@ int main(int argc, char *argv[]) {
             fprintf(output_asm, "    add r8, r9\n"); // Add R9 into R8
         }
         // --- 4. INSTRUCTION: PRINT VARIABLE (print_var a) ---
+
+        // --- 4. INSTRUCTION: PRINT VARIABLE (print_var a) ---
         else if (strcmp(line, "print_var a") == 0) {
             fprintf(output_asm, "    # --- print_var a ---\n");
-            fprintf(output_asm, "    lea rdi, [fmt_int]\n"); // 1st argument for printf: format string
-            fprintf(output_asm, "    mov rsi, r8\n");        // 2nd argument for printf: value of 'a'
-            fprintf(output_asm, "    mov al, 0\n");          // Required for functions with floating points (set to 0)
-            fprintf(output_asm, "    call printf\n");        // Call standard C printf function
-        }
+            fprintf(output_asm, "    sub rsp, 8\n");          // Align stack to 16 bytes for C functions!
+            fprintf(output_asm, "    lea rdi, [fmt_int]\n");
+            fprintf(output_asm, "    mov rsi, r8\n");
+            fprintf(output_asm, "    xor eax, eax\n");
+            fprintf(output_asm, "    call printf\n");
+            fprintf(output_asm, "    add rsp, 8\n");          // Restore stack pointer right after!
+
+
+            fprintf(output_asm, "\n    # --- Exit Program Gracefully ---\n");
+            fprintf(output_asm, "    xor eax, eax\n"); // Sets return status code to 0 (Success)
+            fprintf(output_asm, "    ret\n\n");        // Return cleanly to the operating system!
+            
+
+ 
     }
 
+}
+
+    // fprintf(output_asm, "\n    # --- Exit Program Gracefully ---\n");
+    // fprintf(output_asm, "    xor eax, eax\n"); // Sets return status code to 0 (Success)
+    // fprintf(output_asm, "    ret\n\n");        // Return cleanly to the operating system!
+
+    
     // End of program and append the data section
     fprintf(output_asm, ASM_EXIT);
     fprintf(output_asm, "%s", data_section);
